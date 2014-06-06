@@ -1,6 +1,5 @@
 package com.codurance.solid;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.codurance.solid.BookType.IT;
@@ -10,14 +9,14 @@ import static java.util.Collections.unmodifiableList;
 
 public class Basket {
 
-	private List<Book> books = new ArrayList<>();
+	private Books books = new Books();
 
-	public void add(Book item) {
-		books.add(item);
+	public void add(Book book) {
+		books.add(book);
 	}
 
 	public List<Book> books() {
-		return unmodifiableList(books);
+		return unmodifiableList(books.all());
 	}
 
 	public double priceWithDiscount() {
@@ -29,17 +28,14 @@ public class Basket {
 		double total_price_for_travel_books = 0;
 		double total_price_for_other_books = 0;
 
-		for (Book book : this.books) {
-			if (IT.equals(book.type())) {
-				number_of_it_books += 1;
-				total_price_for_it_books += book.price();
-			} else if (TRAVEL.equals(book.type())) {
-				number_of_travel_books += 1;
-				total_price_for_travel_books += book.price();
-			} else {
-				total_price_for_other_books += book.price();
-			}
-		}
+		number_of_it_books = books.numberOfBooksOfType(IT);
+		total_price_for_it_books = books.totalPriceForBooksOfType(IT);
+
+		number_of_travel_books = books.numberOfBooksOfType(TRAVEL);
+		total_price_for_travel_books = books.totalPriceForBooksOfType(TRAVEL);
+
+		total_price_for_other_books = books.totalPriceForBooksNotOfTypes(IT, TRAVEL);
+
 		if (number_of_it_books > 2) {
 			it_books_discount = 0.7; // 30% discount when buying more than 2 IT books
 		} else if (number_of_it_books > 0) {
@@ -61,11 +57,7 @@ public class Basket {
 	}
 
 	public double fullPrice() {
-		double price = 0;
-		for (Book book : books) {
-			price += book.price();
-		}
-		return toDecimal(price);
+		return toDecimal(books.sumOfAllPrices());
 	}
 
 	private double toDecimal(double number) {
