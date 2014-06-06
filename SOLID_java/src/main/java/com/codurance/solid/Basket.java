@@ -30,14 +30,14 @@ public class Basket {
 		double total_price_for_other_books = 0;
 
 		for (Book book : this.books) {
-			if (IT.equals(book.getType())) {
+			if (IT.equals(book.type())) {
 				number_of_it_books += 1;
-				total_price_for_it_books += book.getPrice();
-			} else if (TRAVEL.equals(book.getType())) {
+				total_price_for_it_books += book.price();
+			} else if (TRAVEL.equals(book.type())) {
 				number_of_travel_books += 1;
-				total_price_for_travel_books += book.getPrice();
+				total_price_for_travel_books += book.price();
 			} else {
-				total_price_for_other_books += book.getPrice();
+				total_price_for_other_books += book.price();
 			}
 		}
 		if (number_of_it_books > 2) {
@@ -63,7 +63,7 @@ public class Basket {
 	public double fullPrice() {
 		double price = 0;
 		for (Book book : books) {
-			price += book.getPrice();
+			price += book.price();
 		}
 		return toDecimal(price);
 	}

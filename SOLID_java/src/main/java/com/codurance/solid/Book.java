@@ -12,15 +12,15 @@ public class Book {
 		this.price = price;
 	}
 
-	public String getName() {
+	public String name() {
 		return name;
 	}
 
-	public BookType getType() {
+	public BookType type() {
 		return type;
 	}
 
-	public double getPrice() {
+	public double price() {
 		return price;
 	}
 
