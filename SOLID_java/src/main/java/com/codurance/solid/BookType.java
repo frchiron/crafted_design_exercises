@@ -5,6 +5,6 @@ public enum BookType {
 	COOKING,
 	FANTASY,
 	IT,
-	TRAVELLING;
+	TRAVEL;
 
 }

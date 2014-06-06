@@ -3,9 +3,8 @@ package com.codurance.solid;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.codurance.solid.BookType.FANTASY;
 import static com.codurance.solid.BookType.IT;
-import static com.codurance.solid.BookType.TRAVELLING;
+import static com.codurance.solid.BookType.TRAVEL;
 import static java.lang.Math.round;
 import static java.util.Collections.unmodifiableList;
 
@@ -17,32 +16,26 @@ public class Basket {
 		books.add(item);
 	}
 
-	public List<Book> items() {
+	public List<Book> books() {
 		return unmodifiableList(books);
 	}
 
 	public double priceWithDiscount() {
 		double it_books_discount = 0;
 		double travel_books_discount = 0;
-		double fantasy_books_discount = 0;
 		double number_of_it_books = 0;
 		double number_of_travel_books = 0;
-		double number_of_fantasy_books = 0;
 		double total_price_for_it_books = 0;
 		double total_price_for_travel_books = 0;
-		double total_price_for_fantasy_books = 0;
 		double total_price_for_other_books = 0;
 
 		for (Book book : this.books) {
 			if (IT.equals(book.getType())) {
 				number_of_it_books += 1;
 				total_price_for_it_books += book.getPrice();
-			} else if (TRAVELLING.equals(book.getType())) {
+			} else if (TRAVEL.equals(book.getType())) {
 				number_of_travel_books += 1;
 				total_price_for_travel_books += book.getPrice();
-			} else if (FANTASY.equals(book.getType())) {
-				number_of_fantasy_books += 1;
-				total_price_for_fantasy_books += book.getPrice();
 			} else {
 				total_price_for_other_books += book.getPrice();
 			}
@@ -55,13 +48,14 @@ public class Basket {
 		if (number_of_travel_books > 3) {
 			travel_books_discount = 0.6; // 40% discount when buying more than 3 travel books
 		}
-		if (number_of_fantasy_books >= 1) {
-			fantasy_books_discount = 0.8; // 20% discount on any fantasy book
+
+		if (travel_books_discount > 0) {
+			total_price_for_travel_books *= travel_books_discount;
 		}
 
-		return toDecimal((total_price_for_fantasy_books * fantasy_books_discount)
-				+ (total_price_for_it_books * it_books_discount)
-				+ (total_price_for_travel_books * travel_books_discount)
+		return toDecimal((
+				  total_price_for_it_books * it_books_discount)
+				+ total_price_for_travel_books
 				+ total_price_for_other_books);
 
 	}

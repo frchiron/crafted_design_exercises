@@ -3,7 +3,7 @@ package com.codurance.solid;
 public class Book {
 
 	private String name;
-	private String type;
+	private BookType type;
 	private double price;
 
 	public Book(String name, BookType type, double price) {
@@ -16,7 +16,7 @@ public class Book {
 		return name;
 	}
 
-	public String getType() {
+	public BookType getType() {
 		return type;
 	}
 

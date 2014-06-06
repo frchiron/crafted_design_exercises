@@ -19,8 +19,13 @@ public class BasketShould {
 		assertThat(emptyBasket().priceWithDiscount(), is(0.0));
 	}
 
+	@Test(expected = UnsupportedOperationException.class) public void
+	return_an_unmodifiable_list_of_books() {
+	    aBasket().build().books().add(aCookingBook().build());
+	}
+
 	@Test public void
-	return_full_price_of_a_book_when_no_discounts_is_applied_to_it() {
+	give_no_discount_when_book_is_not_eligible_for_a_discount() {
 		Book aBookWithNoDiscount = aCookingBook().costing(10.00).build();
 		Basket basket = aBasket().with(aBookWithNoDiscount).build();
 
@@ -73,6 +78,45 @@ public class BasketShould {
 							.build();
 
 	    assertThat(basket.priceWithDiscount(), is(36.0));
+	}
+
+	@Test public void
+	not_give_discounts_for_Travel_books_when_containing_less_than_four_of_them() {
+		Basket basket = aBasket()
+							.with(
+									aTravelBook().costing(30.0).build(),
+									aTravelBook().costing(10.0).build(),
+									aTravelBook().costing(20.0).build())
+							.build();
+
+	    assertThat(basket.priceWithDiscount(), is(60.0));
+	}
+
+	@Test public void
+	give_40_percent_discount_for_Travel_books_when_containing_more_than_three_of_them() {
+		Basket basket = aBasket()
+							.with(
+									aTravelBook().costing(30.0).build(),
+									aTravelBook().costing(10.0).build(),
+									aTravelBook().costing(20.0).build(),
+									aTravelBook().costing(10.0).build())
+							.build();
+
+	    assertThat(basket.priceWithDiscount(), is(42.0));
+	}
+
+	@Test public void
+	combine_10_percent_discount_for_1_IT_book_and_40_percent_discount_for_4_Travel_books() {
+		Basket basket = aBasket()
+							.with(
+									anITBook().costing(10.0).build(),
+									aTravelBook().costing(30.0).build(),
+									aTravelBook().costing(10.0).build(),
+									aTravelBook().costing(20.0).build(),
+									aTravelBook().costing(10.0).build())
+							.build();
+
+	    assertThat(basket.priceWithDiscount(), is(51.0));
 	}
 
 	private Basket emptyBasket() {
