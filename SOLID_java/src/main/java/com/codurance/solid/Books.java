@@ -37,15 +37,15 @@ public class Books {
 	}
 
 	private DoubleStream pricesOf(Stream<Book> books) {
-		return books.mapToDouble(b -> b.getPrice());
+		return books.mapToDouble(b -> b.price());
 	}
 
 	private Stream<Book> booksOfType(BookType type) {
-		return bookList.stream().filter(b -> type.equals(b.getType()));
+		return bookList.stream().filter(b -> type.equals(b.type()));
 	}
 
 	private Stream<Book> booksNotOfTypes(List<BookType> types) {
-		return bookList.stream().filter(b -> !types.contains(b.getType()));
+		return bookList.stream().filter(b -> !types.contains(b.type()));
 	}
 
 }
