@@ -1,27 +1,32 @@
 package com.codurance.builders;
 
 import com.codurance.solid.Book;
+import com.codurance.solid.BookType;
+
+import static com.codurance.solid.BookType.COOKING;
+import static com.codurance.solid.BookType.IT;
+import static com.codurance.solid.BookType.TRAVELLING;
 
 public class BookBuilder {
 
 	private static final String A_NAME = "book name";
-	private String bookType;
+	private BookType bookType;
 	private double price;
 
-	public BookBuilder(String bookType) {
+	public BookBuilder(BookType bookType) {
 		this.bookType = bookType;
 	}
 
 	public static BookBuilder aCookingBook() {
-		return new BookBuilder("Cooking");
+		return new BookBuilder(COOKING);
 	}
 
 	public static BookBuilder anITBook() {
-		return new BookBuilder("IT");
+		return new BookBuilder(IT);
 	}
 
 	public static BookBuilder aTravelBook() {
-		return new BookBuilder("Travel");
+		return new BookBuilder(TRAVELLING);
 	}
 
 	public BookBuilder costing(double price) {

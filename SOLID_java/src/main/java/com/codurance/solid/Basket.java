@@ -3,6 +3,9 @@ package com.codurance.solid;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.codurance.solid.BookType.FANTASY;
+import static com.codurance.solid.BookType.IT;
+import static com.codurance.solid.BookType.TRAVELLING;
 import static java.lang.Math.round;
 import static java.util.Collections.unmodifiableList;
 
@@ -31,13 +34,13 @@ public class Basket {
 		double total_price_for_other_books = 0;
 
 		for (Book book : this.books) {
-			if ("IT".equals(book.getType())) {
+			if (IT.equals(book.getType())) {
 				number_of_it_books += 1;
 				total_price_for_it_books += book.getPrice();
-			} else if ("Travel".equals(book.getType())) {
+			} else if (TRAVELLING.equals(book.getType())) {
 				number_of_travel_books += 1;
 				total_price_for_travel_books += book.getPrice();
-			} else if ("Fantasy".equals(book.getType())) {
+			} else if (FANTASY.equals(book.getType())) {
 				number_of_fantasy_books += 1;
 				total_price_for_fantasy_books += book.getPrice();
 			} else {
