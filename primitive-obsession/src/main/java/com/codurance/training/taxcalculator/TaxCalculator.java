@@ -8,6 +8,10 @@ public final class TaxCalculator {
     }
 
     public int calculateTaxIn(String currency) {
-        return (int) (amount * 0.2);
+        if (amount > 1000) {
+            return (int) (amount * 0.25);
+        } else {
+            return (int) (amount * 0.2);
+        }
     }
 }

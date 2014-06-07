@@ -11,6 +11,7 @@ public final class TaxCalculatorTest {
     @Test public void
     calculates_the_tax_of_an_amount_under_a_thousand_pounds_at_20_percent() {
         calculator.add(500, "GBP");
+
         int tax = calculator.calculateTaxIn("GBP");
 
         assertThat(tax, is(100));
@@ -20,8 +21,21 @@ public final class TaxCalculatorTest {
     calculates_the_tax_of_multiple_amounts() {
         calculator.add(120, "GBP");
         calculator.add(200, "GBP");
+
         int tax = calculator.calculateTaxIn("GBP");
 
         assertThat(tax, is(64));
+    }
+
+    @Test public void
+    calculates_the_tax_of_an_amount_over_a_thousand_pounds_at_25_percent() {
+        calculator.add(500, "GBP");
+        calculator.add(200, "GBP");
+        calculator.add(400, "GBP");
+        calculator.add(20, "GBP");
+
+        int tax = calculator.calculateTaxIn("GBP");
+
+        assertThat(tax, is(280));
     }
 }
