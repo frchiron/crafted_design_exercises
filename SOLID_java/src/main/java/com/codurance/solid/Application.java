@@ -14,7 +14,9 @@ public class Application {
 		Book travel_book_1  = new Book("Notes from a Small Island", TRAVEL, 10.00);
 		Book cooking_book_1 = new Book("Brazilian Flavours", COOKING, 10.00);
 
-		Basket basket = new Basket();
+		DiscountCalculator discountCalculator = new DiscountCalculator();
+
+		Basket basket = new Basket(discountCalculator);
 		basket.add(fantasy_book_1);
 		basket.add(fantasy_book_2);
 		basket.add(it_book_1);

@@ -2,6 +2,7 @@ package com.codurance.builders;
 
 import com.codurance.solid.Basket;
 import com.codurance.solid.Book;
+import com.codurance.solid.DiscountCalculator;
 
 public class BasketBuilder {
 
@@ -17,7 +18,7 @@ public class BasketBuilder {
 	}
 
 	public Basket build() {
-		Basket basket = new Basket();
+		Basket basket = new Basket(new DiscountCalculator());
 		addBooksTo(basket);
 		return basket;
 	}

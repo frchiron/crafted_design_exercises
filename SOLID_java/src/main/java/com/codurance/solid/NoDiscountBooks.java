@@ -3,15 +3,11 @@ package com.codurance.solid;
 import static com.codurance.solid.BookType.IT;
 import static com.codurance.solid.BookType.TRAVEL;
 
-public class NoDiscountBooks {
+public class NoDiscountBooks implements BooksDiscount {
 
-	private Books books;
-
-	public NoDiscountBooks(Books books) {
-		this.books = books;
-	}
-
-	public double totalPrice() {
+	@Override
+	public double priceWithDiscount(Books books) {
 		return books.totalPriceForBooksNotOfTypes(IT, TRAVEL);
 	}
+
 }

@@ -120,7 +120,7 @@ public class BasketShould {
 	}
 
 	private Basket emptyBasket() {
-		return new Basket();
+		return new Basket(new DiscountCalculator());
 	}
 
 }

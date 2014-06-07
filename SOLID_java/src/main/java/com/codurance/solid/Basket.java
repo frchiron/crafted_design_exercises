@@ -8,6 +8,11 @@ import static java.util.Collections.unmodifiableList;
 public class Basket {
 
 	private Books books = new Books();
+	private DiscountCalculator discountCalculator;
+
+	public Basket(DiscountCalculator discountCalculator) {
+		this.discountCalculator = discountCalculator;
+	}
 
 	public void add(Book book) {
 		books.add(book);
@@ -18,11 +23,7 @@ public class Basket {
 	}
 
 	public double priceWithDiscount() {
-		return toDecimal(
-				  new ITBooksDiscount(books).totalPrice()
-				+ new TravelBooksDiscount(books).totalPrice()
-				+ new NoDiscountBooks(books).totalPrice());
-
+		return toDecimal(discountCalculator.priceWithDiscount(books));
 	}
 
 	public double fullPrice() {
