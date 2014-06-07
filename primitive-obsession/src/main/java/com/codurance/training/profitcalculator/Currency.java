@@ -12,4 +12,7 @@ public class Currency {
 	public static final Currency USD = new Currency("USD");
 	public static final Currency EUR = new Currency("EUR");
 
+	public static Currency currency(String symbol) {
+		return new Currency(symbol);
+	}
 }

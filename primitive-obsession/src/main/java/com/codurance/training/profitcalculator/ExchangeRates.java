@@ -17,7 +17,11 @@ public class ExchangeRates {
 			.build();
 
 	public Double rateFor(Currency currency) {
-		return EXCHANGE_RATES.get(currency);
+		Double rate = EXCHANGE_RATES.get(currency);
+		if (rate == null) {
+			throw new IllegalArgumentException("Illegal Currency");
+		}
+		return rate;
 	}
 
 }
