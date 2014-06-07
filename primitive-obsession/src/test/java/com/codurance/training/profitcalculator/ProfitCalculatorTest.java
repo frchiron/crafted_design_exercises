@@ -9,8 +9,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public final class ProfitCalculatorTest {
-    private final ProfitCalculator gbpCalculator = new ProfitCalculator(GBP);
-    private final ProfitCalculator eurCalculator = new ProfitCalculator(EUR);
+	private ExchangeRates exchangeRates = new ExchangeRates();
+
+    private final ProfitCalculator gbpCalculator = new ProfitCalculator(GBP, exchangeRates);
+    private final ProfitCalculator eurCalculator = new ProfitCalculator(EUR, exchangeRates);
 
     @Test public void
     calculates_the_tax_at_20_percent() {

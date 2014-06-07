@@ -1,26 +1,16 @@
 package com.codurance.training.profitcalculator;
 
-import java.util.Map;
-import com.google.common.collect.ImmutableMap;
-
-import static com.codurance.training.profitcalculator.Currency.EUR;
-import static com.codurance.training.profitcalculator.Currency.GBP;
-import static com.codurance.training.profitcalculator.Currency.USD;
-
 public final class ProfitCalculator {
-    private static final Map<Currency, Double> EXCHANGE_RATES = ImmutableMap.<Currency, Double>builder()
-            .put(GBP, 1.0)
-            .put(USD, 1.6)
-            .put(EUR, 1.2)
-            .build();
 
     private final Currency localCurrency;
-    private int localAmount = 0;
+	private ExchangeRates exchangeRates;
+	private int localAmount = 0;
     private int foreignAmount = 0;
 
-    public ProfitCalculator(Currency localCurrency) {
+    public ProfitCalculator(Currency localCurrency, ExchangeRates exchangeRates) {
         this.localCurrency = localCurrency;
-        Double exchangeRate = EXCHANGE_RATES.get(localCurrency);
+	    this.exchangeRates = exchangeRates;
+	    Double exchangeRate = exchangeRates.rateFor(localCurrency);
         if (exchangeRate == null) {
             throw new IllegalArgumentException("Invalid currency.");
         }
@@ -28,7 +18,7 @@ public final class ProfitCalculator {
 
     public void add(int amount, Currency currency, boolean incoming) {
         int realAmount = amount;
-        Double exchangeRate = EXCHANGE_RATES.get(currency) / EXCHANGE_RATES.get(localCurrency);
+        Double exchangeRate = exchangeRates.rateFor(currency) / exchangeRates.rateFor(localCurrency);
         if (exchangeRate != null) {
             realAmount /= exchangeRate;
         }
