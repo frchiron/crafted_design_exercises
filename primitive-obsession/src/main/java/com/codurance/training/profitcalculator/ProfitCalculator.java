@@ -3,18 +3,22 @@ package com.codurance.training.profitcalculator;
 import java.util.Map;
 import com.google.common.collect.ImmutableMap;
 
+import static com.codurance.training.profitcalculator.Currency.EUR;
+import static com.codurance.training.profitcalculator.Currency.GBP;
+import static com.codurance.training.profitcalculator.Currency.USD;
+
 public final class ProfitCalculator {
-    private static final Map<String, Double> EXCHANGE_RATES = ImmutableMap.<String, Double>builder()
-            .put("GBP", 1.0)
-            .put("USD", 1.6)
-            .put("EUR", 1.2)
+    private static final Map<Currency, Double> EXCHANGE_RATES = ImmutableMap.<Currency, Double>builder()
+            .put(GBP, 1.0)
+            .put(USD, 1.6)
+            .put(EUR, 1.2)
             .build();
 
-    private final String localCurrency;
+    private final Currency localCurrency;
     private int localAmount = 0;
     private int foreignAmount = 0;
 
-    public ProfitCalculator(String localCurrency) {
+    public ProfitCalculator(Currency localCurrency) {
         this.localCurrency = localCurrency;
         Double exchangeRate = EXCHANGE_RATES.get(localCurrency);
         if (exchangeRate == null) {
@@ -22,7 +26,7 @@ public final class ProfitCalculator {
         }
     }
 
-    public void add(int amount, String currency, boolean incoming) {
+    public void add(int amount, Currency currency, boolean incoming) {
         int realAmount = amount;
         Double exchangeRate = EXCHANGE_RATES.get(currency) / EXCHANGE_RATES.get(localCurrency);
         if (exchangeRate != null) {
