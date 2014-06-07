@@ -12,9 +12,17 @@ The Code has the following behaviour:
 
 **Proposed refactoring:**
 
-* Extract discount offers from Basket
-* Create basket informing the discount offers available
-* Transform the books List in a First Class Collection, moving respective behavior to it.
+- Transform the books List in a First Class Collection called Books:    
+	- Move respective behavior to it.
+		- Questions about books, number of book types, sum of prices, etc 
+- Extract discount offers from Basket
+	- Each discount type should have its own class
+	- Discount classes should implement the same interface
+	- You may need a NoDiscountsBook class to cater for books with no discounts
+- Create a DiscountCalculator that contains a list of discount classes
+	- Iterates through discount classes and calculate price with discounts
+- Pass the DiscountCalculator into the Basket constructor
+	- Basket delegates discount calculation to DiscountCalculator
 
 **Implementing the requirement**
 
@@ -23,6 +31,8 @@ The Code has the following behaviour:
 
 **Lesson:**
 
-* New features can be slid into the code almost without change 
-* Changes while adding new functionality are small and localised
-* Changes happen in the main (application assembly) and not in the domain
+- New features can be slid into the code almost without change
+	- Minor change on DiscountCalculator and NoDiscountBooks   
+- Changes while adding new functionality are small and localised
+- Changes happen in the main (application assembly) and not in the domain
+	- This would happen if using Dependency Injection frameworks
