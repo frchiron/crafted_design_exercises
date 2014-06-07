@@ -1,10 +1,10 @@
 package com.codurance.training.taxcalculator;
 
 public final class TaxCalculator {
-    private int amount;
+    private int amount = 0;
 
     public void add(int amount, String currency) {
-        this.amount = amount;
+        this.amount += amount;
     }
 
     public int calculateTaxIn(String currency) {
