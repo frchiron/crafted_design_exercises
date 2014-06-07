@@ -1,19 +1,22 @@
 package com.codurance.training.taxcalculator;
 
+import java.util.Map;
+import com.google.common.collect.ImmutableMap;
+
 public final class TaxCalculator {
+    private static final Map<String, Double> EXCHANGE_RATES = ImmutableMap.<String, Double>builder()
+            .put("GBP", 1.0)
+            .put("USD", 1.6)
+            .put("EUR", 1.2)
+            .build();
+
     private int amount = 0;
 
     public void add(int amount, String currency) {
-        int realAmount;
-        switch (currency) {
-            case "GBP":
-                realAmount = amount;
-                break;
-            case "USD":
-                realAmount = (int) (amount / 1.6);
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid currency.");
+        int realAmount = amount;
+        Double exchangeRate = EXCHANGE_RATES.get(currency);
+        if (exchangeRate != null) {
+            realAmount /= exchangeRate;
         }
         this.amount += realAmount;
     }
@@ -26,15 +29,11 @@ public final class TaxCalculator {
             taxAmount = (int) (amount * 0.2);
         }
 
-        switch (currency) {
-            case "GBP":
-                return taxAmount;
-            case "USD":
-                return (int) (taxAmount * 1.6);
-            case "EUR":
-                return (int) (taxAmount * 1.2);
-            default:
-                throw new IllegalArgumentException("Invalid currency.");
+        Double exchangeRate = EXCHANGE_RATES.get(currency);
+        if (exchangeRate != null) {
+            return (int) (taxAmount * exchangeRate);
+        } else {
+            throw new IllegalArgumentException("Invalid currency.");
         }
     }
 }
