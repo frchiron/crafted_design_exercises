@@ -46,4 +46,10 @@ public class Money {
 		return result;
 	}
 
+	public Money sum(Money anotherAmount) {
+		if (!currency.equals(anotherAmount.currency)) {
+			throw new IllegalArgumentException("Sum cannot be performed for different currencies");
+		}
+		return new Money(amount + anotherAmount.amount, currency);
+	}
 }

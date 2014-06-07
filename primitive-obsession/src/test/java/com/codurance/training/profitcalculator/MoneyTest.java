@@ -2,6 +2,7 @@ package com.codurance.training.profitcalculator;
 
 import org.junit.Test;
 
+import static com.codurance.training.profitcalculator.Currency.EUR;
 import static com.codurance.training.profitcalculator.Currency.GBP;
 import static com.codurance.training.profitcalculator.Money.money;
 import static org.hamcrest.core.Is.is;
@@ -22,5 +23,15 @@ public class MoneyTest {
 	@Test public void
 	can_be_converted_to_negative() {
 	    assertThat(money(100, GBP).negative(), is(money(-100, GBP)));
+	}
+
+	@Test public void
+	can_be_added() {
+	    assertThat(money(100, GBP).sum(money(50, GBP)), is(money(150, GBP)));
+	}
+
+	@Test(expected = IllegalArgumentException.class) public void
+	throw_exception_if_added_to_an_amount_with_different_currency() {
+		money(100, GBP).sum(money(50, EUR));
 	}
 }
