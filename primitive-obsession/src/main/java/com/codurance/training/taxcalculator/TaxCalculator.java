@@ -19,10 +19,22 @@ public final class TaxCalculator {
     }
 
     public int calculateTaxIn(String currency) {
+        int taxAmount;
         if (amount > 1000) {
-            return (int) (amount * 0.25);
+            taxAmount = (int) (amount * 0.25);
         } else {
-            return (int) (amount * 0.2);
+            taxAmount = (int) (amount * 0.2);
+        }
+
+        switch (currency) {
+            case "GBP":
+                return taxAmount;
+            case "USD":
+                return (int) (taxAmount * 1.6);
+            case "EUR":
+                return (int) (taxAmount * 1.2);
+            default:
+                throw new IllegalArgumentException("Invalid currency.");
         }
     }
 }

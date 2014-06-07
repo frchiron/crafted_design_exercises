@@ -48,4 +48,14 @@ public final class TaxCalculatorTest {
 
         assertThat(tax, is(49));
     }
+
+    @Test public void
+    calculate_the_tax_in_another_currency() {
+        calculator.add(80, "USD");
+        calculator.add(50, "GBP");
+
+        int tax = calculator.calculateTaxIn("EUR");
+
+        assertThat(tax, is(24));
+    }
 }
