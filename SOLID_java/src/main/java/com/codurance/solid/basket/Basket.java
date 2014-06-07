@@ -1,4 +1,8 @@
-package com.codurance.solid;
+package com.codurance.solid.basket;
+
+import com.codurance.solid.book.Book;
+import com.codurance.solid.book.Books;
+import com.codurance.solid.discount.DiscountCalculator;
 
 import java.util.List;
 

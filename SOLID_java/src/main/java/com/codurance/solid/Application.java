@@ -1,6 +1,10 @@
 package com.codurance.solid;
 
-import static com.codurance.solid.BookType.*;
+import com.codurance.solid.basket.Basket;
+import com.codurance.solid.book.Book;
+import com.codurance.solid.discount.DiscountCalculator;
+
+import static com.codurance.solid.book.BookType.*;
 
 public class Application {
 

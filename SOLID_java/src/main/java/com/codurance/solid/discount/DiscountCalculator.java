@@ -1,4 +1,6 @@
-package com.codurance.solid;
+package com.codurance.solid.discount;
+
+import com.codurance.solid.book.Books;
 
 import java.util.ArrayList;
 import java.util.List;

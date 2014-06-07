@@ -1,6 +1,8 @@
-package com.codurance.solid;
+package com.codurance.solid.discount;
 
-import static com.codurance.solid.BookType.TRAVEL;
+import com.codurance.solid.book.Books;
+
+import static com.codurance.solid.book.BookType.TRAVEL;
 
 public class TravelBooksDiscount implements BooksDiscount {
 

@@ -1,4 +1,4 @@
-package com.codurance.solid;
+package com.codurance.solid.book;
 
 import java.util.ArrayList;
 import java.util.List;

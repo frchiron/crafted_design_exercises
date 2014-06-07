@@ -1,5 +1,8 @@
 package com.codurance.solid;
 
+import com.codurance.solid.basket.Basket;
+import com.codurance.solid.book.Book;
+import com.codurance.solid.discount.DiscountCalculator;
 import org.junit.Test;
 
 import static com.codurance.builders.BasketBuilder.aBasket;

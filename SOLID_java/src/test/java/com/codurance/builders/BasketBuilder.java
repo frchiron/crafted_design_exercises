@@ -1,8 +1,8 @@
 package com.codurance.builders;
 
-import com.codurance.solid.Basket;
-import com.codurance.solid.Book;
-import com.codurance.solid.DiscountCalculator;
+import com.codurance.solid.basket.Basket;
+import com.codurance.solid.book.Book;
+import com.codurance.solid.discount.DiscountCalculator;
 
 public class BasketBuilder {
 
