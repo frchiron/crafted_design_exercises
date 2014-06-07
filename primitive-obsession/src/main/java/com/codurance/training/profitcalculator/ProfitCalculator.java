@@ -31,16 +31,13 @@ public final class ProfitCalculator {
     }
 
     public int calculateTax() {
-        int taxAmount;
-        if (amount > 1000) {
-            taxAmount = (int) (amount * 0.25);
-        } else {
-            taxAmount = (int) (amount * 0.2);
+        if (amount < 0) {
+            return 0;
         }
 
         Double exchangeRate = EXCHANGE_RATES.get(localCurrency);
         if (exchangeRate != null) {
-            return (int) (taxAmount * exchangeRate);
+            return (int) (amount * 0.2 * exchangeRate);
         } else {
             throw new IllegalArgumentException("Invalid currency.");
         }
