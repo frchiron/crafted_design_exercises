@@ -12,13 +12,17 @@ public final class ProfitCalculator {
 
     private int amount = 0;
 
-    public void add(int amount, String currency) {
+    public void add(int amount, String currency, boolean incoming) {
         int realAmount = amount;
         Double exchangeRate = EXCHANGE_RATES.get(currency);
         if (exchangeRate != null) {
             realAmount /= exchangeRate;
         }
-        this.amount += realAmount;
+        if (incoming) {
+            this.amount += realAmount;
+        } else {
+            this.amount -= realAmount;
+        }
     }
 
     public int calculateTaxIn(String currency) {
