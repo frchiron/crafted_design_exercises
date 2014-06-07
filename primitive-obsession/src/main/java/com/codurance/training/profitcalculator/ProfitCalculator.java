@@ -34,6 +34,10 @@ public final class ProfitCalculator {
         }
     }
 
+    public int calculateProfit() {
+        return amount - calculateTax();
+    }
+
     public int calculateTax() {
         if (amount < 0) {
             return 0;

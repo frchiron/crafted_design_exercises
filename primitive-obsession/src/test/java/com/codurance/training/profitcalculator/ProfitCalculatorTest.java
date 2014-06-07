@@ -13,8 +13,10 @@ public final class ProfitCalculatorTest {
     calculates_the_tax_at_20_percent() {
         gbpCalculator.add(500, "GBP", true);
 
+        int profit = gbpCalculator.calculateProfit();
         int tax = gbpCalculator.calculateTax();
 
+        assertThat(profit, is(400));
         assertThat(tax, is(100));
     }
 
@@ -23,8 +25,10 @@ public final class ProfitCalculatorTest {
         gbpCalculator.add(120, "GBP", true);
         gbpCalculator.add(200, "GBP", true);
 
+        int profit = gbpCalculator.calculateProfit();
         int tax = gbpCalculator.calculateTax();
 
+        assertThat(profit, is(256));
         assertThat(tax, is(64));
     }
 
@@ -33,8 +37,10 @@ public final class ProfitCalculatorTest {
         gbpCalculator.add(500, "GBP", true);
         gbpCalculator.add(360, "EUR", false);
 
+        int profit = gbpCalculator.calculateProfit();
         int tax = gbpCalculator.calculateTax();
 
+        assertThat(profit, is(160));
         assertThat(tax, is(40));
     }
 
@@ -45,8 +51,10 @@ public final class ProfitCalculatorTest {
         gbpCalculator.add(400, "GBP", false);
         gbpCalculator.add(20, "GBP", false);
 
+        int profit = gbpCalculator.calculateProfit();
         int tax = gbpCalculator.calculateTax();
 
+        assertThat(profit, is(-120));
         assertThat(tax, is(0));
     }
 
@@ -55,8 +63,10 @@ public final class ProfitCalculatorTest {
         gbpCalculator.add(120, "GBP", true);
         gbpCalculator.add(200, "USD", true);
 
+        int profit = gbpCalculator.calculateProfit();
         int tax = gbpCalculator.calculateTax();
 
+        assertThat(profit, is(196));
         assertThat(tax, is(49));
     }
 
@@ -65,8 +75,10 @@ public final class ProfitCalculatorTest {
         eurCalculator.add(80, "USD", true);
         eurCalculator.add(50, "GBP", true);
 
+        int profit = gbpCalculator.calculateProfit();
         int tax = eurCalculator.calculateTax();
 
+        assertThat(profit, is(0));
         assertThat(tax, is(24));
     }
 }
