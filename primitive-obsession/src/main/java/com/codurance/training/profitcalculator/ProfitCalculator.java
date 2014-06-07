@@ -11,7 +11,8 @@ public final class ProfitCalculator {
             .build();
 
     private final String localCurrency;
-    private int amount = 0;
+    private int localAmount = 0;
+    private int foreignAmount = 0;
 
     public ProfitCalculator(String localCurrency) {
         this.localCurrency = localCurrency;
@@ -23,27 +24,29 @@ public final class ProfitCalculator {
 
     public void add(int amount, String currency, boolean incoming) {
         int realAmount = amount;
-        Double exchangeRate = EXCHANGE_RATES.get(currency);
+        Double exchangeRate = EXCHANGE_RATES.get(currency) / EXCHANGE_RATES.get(localCurrency);
         if (exchangeRate != null) {
             realAmount /= exchangeRate;
         }
-        if (incoming) {
-            this.amount += realAmount;
+        if (!incoming) {
+            realAmount = -realAmount;
+        }
+        if (localCurrency.equals(currency)) {
+            this.localAmount += realAmount;
         } else {
-            this.amount -= realAmount;
+            this.foreignAmount += realAmount;
         }
     }
 
     public int calculateProfit() {
-        return amount - calculateTax();
+        return localAmount - calculateTax() + foreignAmount;
     }
 
     public int calculateTax() {
-        if (amount < 0) {
+        if (localAmount < 0) {
             return 0;
         }
 
-        Double exchangeRate = EXCHANGE_RATES.get(localCurrency);
-        return (int) (amount * 0.2 * exchangeRate);
+        return (int) (localAmount * 0.2);
     }
 }

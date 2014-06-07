@@ -33,15 +33,28 @@ public final class ProfitCalculatorTest {
     }
 
     @Test public void
+    different_currencies_are_not_taxed() {
+        gbpCalculator.add(120, "GBP", true);
+        gbpCalculator.add(200, "USD", true);
+
+        int profit = gbpCalculator.calculateProfit();
+        int tax = gbpCalculator.calculateTax();
+
+        assertThat(profit, is(221));
+        assertThat(tax, is(24));
+    }
+
+    @Test public void
     handle_outgoings() {
         gbpCalculator.add(500, "GBP", true);
+        gbpCalculator.add(80, "USD", true);
         gbpCalculator.add(360, "EUR", false);
 
         int profit = gbpCalculator.calculateProfit();
         int tax = gbpCalculator.calculateTax();
 
-        assertThat(profit, is(160));
-        assertThat(tax, is(40));
+        assertThat(profit, is(150));
+        assertThat(tax, is(100));
     }
 
     @Test public void
@@ -59,26 +72,15 @@ public final class ProfitCalculatorTest {
     }
 
     @Test public void
-    account_for_different_currencies() {
-        gbpCalculator.add(120, "GBP", true);
-        gbpCalculator.add(200, "USD", true);
+    everything_is_reported_in_the_local_currency() {
+        eurCalculator.add(400, "GBP", true);
+        eurCalculator.add(200, "USD", false);
+        eurCalculator.add(200, "EUR", true);
 
-        int profit = gbpCalculator.calculateProfit();
-        int tax = gbpCalculator.calculateTax();
-
-        assertThat(profit, is(196));
-        assertThat(tax, is(49));
-    }
-
-    @Test public void
-    calculate_the_tax_in_another_currency() {
-        eurCalculator.add(80, "USD", true);
-        eurCalculator.add(50, "GBP", true);
-
-        int profit = gbpCalculator.calculateProfit();
+        int profit = eurCalculator.calculateProfit();
         int tax = eurCalculator.calculateTax();
 
-        assertThat(profit, is(0));
-        assertThat(tax, is(24));
+        assertThat(profit, is(491));
+        assertThat(tax, is(40));
     }
 }
