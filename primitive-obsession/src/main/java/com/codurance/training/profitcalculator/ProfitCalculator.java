@@ -1,9 +1,9 @@
-package com.codurance.training.taxcalculator;
+package com.codurance.training.profitcalculator;
 
 import java.util.Map;
 import com.google.common.collect.ImmutableMap;
 
-public final class TaxCalculator {
+public final class ProfitCalculator {
     private static final Map<String, Double> EXCHANGE_RATES = ImmutableMap.<String, Double>builder()
             .put("GBP", 1.0)
             .put("USD", 1.6)

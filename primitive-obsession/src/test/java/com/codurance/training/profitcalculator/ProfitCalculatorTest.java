@@ -1,12 +1,12 @@
-package com.codurance.training.taxcalculator;
+package com.codurance.training.profitcalculator;
 
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public final class TaxCalculatorTest {
-    private final TaxCalculator calculator = new TaxCalculator();
+public final class ProfitCalculatorTest {
+    private final ProfitCalculator calculator = new ProfitCalculator();
 
     @Test public void
     calculates_the_tax_of_an_amount_under_a_thousand_pounds_at_20_percent() {
