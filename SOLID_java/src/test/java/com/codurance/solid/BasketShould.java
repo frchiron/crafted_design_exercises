@@ -109,17 +109,29 @@ public class BasketShould {
 	}
 
 	@Test public void
-	combine_10_percent_discount_for_1_IT_book_and_40_percent_discount_for_4_Travel_books() {
+	give_20_discount_for_each_Fantasy_book() {
 		Basket basket = aBasket()
 							.with(
-									anITBook().costing(10.0).build(),
-									aTravelBook().costing(30.0).build(),
-									aTravelBook().costing(10.0).build(),
-									aTravelBook().costing(20.0).build(),
-									aTravelBook().costing(10.0).build())
+									aFantasyBook().costing(20.0).build(),
+									aFantasyBook().costing(10.0).build())
 							.build();
 
-	    assertThat(basket.priceWithDiscount(), is(51.0));
+	    assertThat(basket.priceWithDiscount(), is(24.0));
+	}
+
+	@Test public void
+	combine_10_percent_discount_for_1_IT_book_and_40_percent_discount_for_4_Travel_books() {
+		Basket basket = aBasket()
+				.with(
+						anITBook().costing(10.0).build(),
+						aTravelBook().costing(30.0).build(),
+						aTravelBook().costing(10.0).build(),
+						aTravelBook().costing(20.0).build(),
+						aTravelBook().costing(10.0).build(),
+						aFantasyBook().costing(10.0).build())
+				.build();
+
+		assertThat(basket.priceWithDiscount(), is(59.0));
 	}
 
 	private Basket emptyBasket() {

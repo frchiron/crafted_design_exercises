@@ -3,9 +3,7 @@ package com.codurance.builders;
 import com.codurance.solid.book.Book;
 import com.codurance.solid.book.BookType;
 
-import static com.codurance.solid.book.BookType.COOKING;
-import static com.codurance.solid.book.BookType.IT;
-import static com.codurance.solid.book.BookType.TRAVEL;
+import static com.codurance.solid.book.BookType.*;
 
 public class BookBuilder {
 
@@ -27,6 +25,10 @@ public class BookBuilder {
 
 	public static BookBuilder aTravelBook() {
 		return new BookBuilder(TRAVEL);
+	}
+
+	public static BookBuilder aFantasyBook() {
+		return new BookBuilder(FANTASY);
 	}
 
 	public BookBuilder costing(double price) {

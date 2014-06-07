@@ -15,6 +15,7 @@ public class DiscountCalculator {
 		addAll(booksDiscount,
 				new ITBooksDiscount(),
 				new TravelBooksDiscount(),
+				new FantasyBooksDiscount(),
 				new NoDiscountBooks());
 	}
 
