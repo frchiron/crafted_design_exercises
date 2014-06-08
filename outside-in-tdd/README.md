@@ -34,7 +34,6 @@ Create a Twitter engine class that provides the following:
 	1. After posting a few tweets, you should get the tweets from a specific user in reverse-chronological order
 		* It's easier to get a reverse-chronological order sorting by ID than date. 
 			* IDs should be created sequentially. Don't worry about it being thread-safe for this exercise.
-			* Will you need a class to generate tweet IDs?
 	2. Different users post a few tweets. A user follows a couple of other users. User asks for tweets contained in her "wall"
 	
 
