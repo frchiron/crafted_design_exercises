@@ -1,5 +1,7 @@
 package com.codurance.training.profitcalculator;
 
+import java.util.List;
+
 import static com.codurance.training.profitcalculator.Money.money;
 
 public final class ProfitCalculator {
@@ -8,8 +10,9 @@ public final class ProfitCalculator {
 	private ExchangeRates exchangeRates;
 	private Money localAmount;
     private Money foreignAmount;
+	private Items items = new Items();
 
-    public ProfitCalculator(Currency localCurrency, ExchangeRates exchangeRates) {
+	public ProfitCalculator(Currency localCurrency, ExchangeRates exchangeRates) {
         this.localCurrency = localCurrency;
 	    this.exchangeRates = exchangeRates;
 	    this.localAmount = money(0, localCurrency);
@@ -17,6 +20,7 @@ public final class ProfitCalculator {
     }
 
     public void add(Item item) {
+	    items.add(item);
         Money realAmount = item.amount();
         Double exchangeRate = exchangeRates.rateFor(realAmount.currency()) / exchangeRates.rateFor(localCurrency);
 
