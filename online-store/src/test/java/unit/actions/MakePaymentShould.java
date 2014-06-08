@@ -16,7 +16,6 @@ import static model.stock.StockCheckStatus.IN_STOCK;
 import static model.stock.StockCheckStatus.OUT_OF_STOCK;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.Is.isA;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 
@@ -35,23 +34,39 @@ public class MakePaymentShould {
 		makePayment = new MakePayment(stock);
 		basket = new Basket();
 		paymentDetails = new PaymentDetails();
-		given(stock.contains(basket.items())).willReturn(inStock());
 	}
 
 	@Test public void
 	return_payment_status_after_submiting_payment_details() {
+		givenStockCheckIsSuccessful();
+
 		assertThat(makePayment.execute(basket, paymentDetails), isA(PaymentStatus.class));
 	}
 
 	@Test public void
 	inform_when_items_are_out_of_stock() {
-		given(stock.contains(basket.items())).willReturn(
-				notInStockWithMessage(SOCRA_BOOK_NOT_IN_STOCK));
+		givenStockCheckWillFailWithMessage(SOCRA_BOOK_NOT_IN_STOCK);
 
 		PaymentStatus paymentStatus = makePayment.execute(basket, paymentDetails);
 
+		assertPaymentFailedWithMessage(paymentStatus, SOCRA_BOOK_NOT_IN_STOCK);
+	}
+
+	private void givenStockCheckIsSuccessful() {
+		stockCheckWillReturn(inStock());
+	}
+
+	private void givenStockCheckWillFailWithMessage(String errorMessage) {
+		stockCheckWillReturn(notInStockWithMessage(errorMessage));
+	}
+
+	private void stockCheckWillReturn(StockCheck value) {
+		given(stock.contains(basket.items())).willReturn(value);
+	}
+
+	private void assertPaymentFailedWithMessage(PaymentStatus paymentStatus, String errorMessage) {
 	    assertThat(paymentStatus.fail(), is(true));
-		assertThat(paymentStatus.messages().get(0), is(SOCRA_BOOK_NOT_IN_STOCK));
+		assertThat(paymentStatus.messages().get(0), is(errorMessage));
 	}
 
 	private StockCheck notInStockWithMessage(String... messages) {
