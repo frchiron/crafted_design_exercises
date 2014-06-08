@@ -20,4 +20,12 @@ public class TwitterEngine {
 	public List<Tweet> tweetsBy(String twitterId) {
 		return tweetRepository.tweetsFrom(twitterId);
 	}
+
+	public void formerFollowsLatter(String twitterId, String twitterIdToBeFollowed) {
+		tweetRepository.addFollowing(twitterId, twitterIdToBeFollowed);
+	}
+
+	public List<Tweet> wallFor(String twitterId) {
+		return tweetRepository.wallFor(twitterId);
+	}
 }

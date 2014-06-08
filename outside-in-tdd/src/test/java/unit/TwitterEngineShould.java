@@ -24,8 +24,10 @@ public class TwitterEngineShould {
 
 	private static final String LONG_TWEET = "";
 	private static final String SANDRO = "sandromancus";
+	private static final String MASH = "mashooq";
 	private static final String SANDRO_FIRST_TWEET = "Sandro first tweet";
 	private static final List<Tweet> SANDRO_TWEETS = new ArrayList<>();
+	private static final List<Tweet> SOME_TWEETS = new ArrayList<>();
 
 	@Mock private TweetValidator tweetValidator;
 	@Mock private TweetRepository tweetRepository;
@@ -58,6 +60,22 @@ public class TwitterEngineShould {
 		List<Tweet> tweets = twitterEngine.tweetsBy(SANDRO);
 
 	    assertThat(tweets, is(SANDRO_TWEETS));
+	}
+
+	@Test public void
+	store_following_information() {
+		twitterEngine.formerFollowsLatter(SANDRO, MASH);
+
+		verify(tweetRepository).addFollowing(SANDRO, MASH);
+	}
+
+	@Test public void
+	return_wall_belonging_to_a_user() {
+		given(tweetRepository.wallFor(SANDRO)).willReturn(SOME_TWEETS);
+
+		List<Tweet> tweets = twitterEngine.wallFor(SANDRO);
+
+	    assertThat(tweets, is(SOME_TWEETS));
 	}
 
 }

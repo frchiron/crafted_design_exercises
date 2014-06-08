@@ -23,6 +23,16 @@ public class InMemoryTweetRepository implements TweetRepository {
 					.collect(Collectors.toList());
 	}
 
+	@Override
+	public void addFollowing(String twitterId, String twitterIdToBeFollowed) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public List<Tweet> wallFor(String twitterId) {
+		throw new UnsupportedOperationException();
+	}
+
 	private int nextId() {
 		return tweets.isEmpty()
 						? 1
