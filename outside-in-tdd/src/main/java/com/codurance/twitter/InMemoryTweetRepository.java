@@ -1,7 +1,6 @@
 package com.codurance.twitter;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.util.Comparator.reverseOrder;
 import static java.util.stream.Collectors.toList;
