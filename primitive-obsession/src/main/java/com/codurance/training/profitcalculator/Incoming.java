@@ -1,16 +1,9 @@
 package com.codurance.training.profitcalculator;
 
-public class Incoming implements Item {
-
-	private Money amount;
+public class Incoming extends Item {
 
 	public Incoming(Money amount) {
-		this.amount = amount;
-	}
-
-	@Override
-	public Money amount() {
-		return amount;
+		super(amount);
 	}
 
 	public static Incoming incoming(Money amount) {

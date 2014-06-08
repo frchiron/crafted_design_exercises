@@ -37,10 +37,11 @@ public final class ProfitCalculator {
     }
 
     public Money calculateTax() {
-        if (localAmount.lessThan(money(0, localCurrency))) {
+	    Money totalAmount = items.amountIn(localCurrency);
+        if (totalAmount.lessThan(money(0, localCurrency))) {
             return money(0, localCurrency);
         }
 
-        return localAmount.timesBy(0.2);
+        return totalAmount.timesBy(0.2);
     }
 }

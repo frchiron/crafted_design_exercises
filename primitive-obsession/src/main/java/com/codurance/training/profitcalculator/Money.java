@@ -49,6 +49,10 @@ public class Money {
 		return money(amount, anotherCurrency);
 	}
 
+	public boolean isIn(Currency currency) {
+		return this.currency.equals(currency);
+	}
+
 	private void validateCurrencyForOperation(Money anotherAmount) {
 		if (!currency.equals(anotherAmount.currency)) {
 			throw new IllegalArgumentException("Sum cannot be performed for different currencies");

@@ -1,7 +1,19 @@
 package com.codurance.training.profitcalculator;
 
-public interface Item {
+public abstract class Item {
 
-	Money amount();
+	private Money amount;
+
+	public Item(Money amount) {
+		this.amount = amount;
+	}
+
+	public Money amount() {
+		return amount;
+	};
+
+	public boolean isIn(Currency currency) {
+		return amount.isIn(currency);
+	}
 
 }

@@ -1,16 +1,9 @@
 package com.codurance.training.profitcalculator;
 
-public class Outgoing implements Item {
-
-	private Money amount;
+public class Outgoing extends Item {
 
 	public Outgoing(Money amount) {
-		this.amount = amount.negative();
-	}
-
-	@Override
-	public Money amount() {
-		return amount;
+		super(amount.negative());
 	}
 
 	public static Outgoing outgoing(Money amount) {
