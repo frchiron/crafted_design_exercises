@@ -30,8 +30,8 @@ public class ItemsTest {
 		items.add(outgoing(money(200, USD)));
 		items.add(incoming(money(50, USD)));
 
-		assertThat(items.amountIn(GBP), is(money(330, USD)));
-		assertThat(items.amountIn(EUR), is(money(50, USD)));
+		assertThat(items.amountIn(GBP), is(money(330, GBP)));
+		assertThat(items.amountIn(EUR), is(money(50, EUR)));
 		assertThat(items.amountIn(USD), is(money(-150, USD)));
 	}
 
