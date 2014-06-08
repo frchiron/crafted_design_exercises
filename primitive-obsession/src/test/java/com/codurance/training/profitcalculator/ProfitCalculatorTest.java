@@ -5,6 +5,7 @@ import org.junit.Test;
 import static com.codurance.training.profitcalculator.Currency.EUR;
 import static com.codurance.training.profitcalculator.Currency.GBP;
 import static com.codurance.training.profitcalculator.Currency.USD;
+import static com.codurance.training.profitcalculator.Money.money;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -16,76 +17,76 @@ public final class ProfitCalculatorTest {
 
     @Test public void
     calculates_the_tax_at_20_percent() {
-        gbpCalculator.add(500, GBP, true);
+        gbpCalculator.add(money(500, GBP), true);
 
-        int profit = gbpCalculator.calculateProfit();
-        int tax = gbpCalculator.calculateTax();
+        Money profit = gbpCalculator.calculateProfit();
+        Money tax = gbpCalculator.calculateTax();
 
-        assertThat(profit, is(400));
-        assertThat(tax, is(100));
+        assertThat(profit, is(money(400, GBP)));
+        assertThat(tax, is(money(100, GBP)));
     }
 
     @Test public void
     calculates_the_tax_of_multiple_amounts() {
-        gbpCalculator.add(120, GBP, true);
-        gbpCalculator.add(200, GBP, true);
+        gbpCalculator.add(money(120, GBP), true);
+        gbpCalculator.add(money(200, GBP), true);
 
-        int profit = gbpCalculator.calculateProfit();
-        int tax = gbpCalculator.calculateTax();
+        Money profit = gbpCalculator.calculateProfit();
+        Money tax = gbpCalculator.calculateTax();
 
-        assertThat(profit, is(256));
-        assertThat(tax, is(64));
+        assertThat(profit, is(money(256, GBP)));
+        assertThat(tax, is(money(64, GBP)));
     }
 
     @Test public void
     different_currencies_are_not_taxed() {
-        gbpCalculator.add(120, GBP, true);
-        gbpCalculator.add(200, USD, true);
+        gbpCalculator.add(money(120, GBP), true);
+        gbpCalculator.add(money(200, USD), true);
 
-        int profit = gbpCalculator.calculateProfit();
-        int tax = gbpCalculator.calculateTax();
+        Money profit = gbpCalculator.calculateProfit();
+        Money tax = gbpCalculator.calculateTax();
 
-        assertThat(profit, is(221));
-        assertThat(tax, is(24));
+        assertThat(profit, is(money(221, GBP)));
+        assertThat(tax, is(money(24, GBP)));
     }
 
     @Test public void
     handle_outgoings() {
-        gbpCalculator.add(500, GBP, true);
-        gbpCalculator.add(80, USD, true);
-        gbpCalculator.add(360, EUR, false);
+        gbpCalculator.add(money(500, GBP), true);
+        gbpCalculator.add(money(80, USD), true);
+        gbpCalculator.add(money(360, EUR), false);
 
-        int profit = gbpCalculator.calculateProfit();
-        int tax = gbpCalculator.calculateTax();
+        Money profit = gbpCalculator.calculateProfit();
+        Money tax = gbpCalculator.calculateTax();
 
-        assertThat(profit, is(150));
-        assertThat(tax, is(100));
+        assertThat(profit, is(money(150, GBP)));
+        assertThat(tax, is(money(100, GBP)));
     }
 
     @Test public void
     a_negative_balance_results_in_no_tax() {
-        gbpCalculator.add(500, GBP, true);
-        gbpCalculator.add(200, GBP, false);
-        gbpCalculator.add(400, GBP, false);
-        gbpCalculator.add(20, GBP, false);
+        gbpCalculator.add(money(500, GBP), true);
+        gbpCalculator.add(money(200, GBP), false);
+        gbpCalculator.add(money(400, GBP), false);
+        gbpCalculator.add(money(20, GBP), false);
 
-        int profit = gbpCalculator.calculateProfit();
-        int tax = gbpCalculator.calculateTax();
+        Money profit = gbpCalculator.calculateProfit();
+        Money tax = gbpCalculator.calculateTax();
 
-        assertThat(profit, is(-120));
-        assertThat(tax, is(0));
+        assertThat(profit, is(money(-120, GBP)));
+        assertThat(tax, is(money(0, GBP)));
     }
 
     @Test public void
     everything_is_reported_in_the_local_currency() {
-        eurCalculator.add(400, GBP, true);
-        eurCalculator.add(200, USD, false);
-        eurCalculator.add(200, EUR, true);
+        eurCalculator.add(money(400, GBP), true);
+        eurCalculator.add(money(200, USD), false);
+        eurCalculator.add(money(200, EUR), true);
 
-        int profit = eurCalculator.calculateProfit();
-        int tax = eurCalculator.calculateTax();
+        Money profit = eurCalculator.calculateProfit();
+        Money tax = eurCalculator.calculateTax();
 
-        assertThat(profit, is(491));
-        assertThat(tax, is(40));
+        assertThat(profit, is(money(491, EUR)));
+        assertThat(tax, is(money(40, EUR)));
     }
 }

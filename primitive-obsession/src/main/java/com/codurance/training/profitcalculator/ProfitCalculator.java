@@ -1,46 +1,50 @@
 package com.codurance.training.profitcalculator;
 
+import static com.codurance.training.profitcalculator.Money.money;
+
 public final class ProfitCalculator {
 
     private final Currency localCurrency;
 	private ExchangeRates exchangeRates;
-	private int localAmount = 0;
-    private int foreignAmount = 0;
+	private Money localAmount;
+    private Money foreignAmount;
 
     public ProfitCalculator(Currency localCurrency, ExchangeRates exchangeRates) {
         this.localCurrency = localCurrency;
 	    this.exchangeRates = exchangeRates;
+	    this.localAmount = money(0, localCurrency);
+	    this.foreignAmount = money(0, localCurrency);
 	    Double exchangeRate = exchangeRates.rateFor(localCurrency);
         if (exchangeRate == null) {
             throw new IllegalArgumentException("Invalid currency.");
         }
     }
 
-    public void add(int amount, Currency currency, boolean incoming) {
-        int realAmount = amount;
-        Double exchangeRate = exchangeRates.rateFor(currency) / exchangeRates.rateFor(localCurrency);
+    public void add(Money amount, boolean incoming) {
+        Money realAmount = amount;
+        Double exchangeRate = exchangeRates.rateFor(amount.currency()) / exchangeRates.rateFor(localCurrency);
         if (exchangeRate != null) {
-            realAmount /= exchangeRate;
+            realAmount = realAmount.dividedBy(exchangeRate);
         }
         if (!incoming) {
-            realAmount = -realAmount;
+            realAmount = realAmount.negative();
         }
-        if (localCurrency.equals(currency)) {
-            this.localAmount += realAmount;
+        if (localCurrency.equals(realAmount.currency())) {
+            this.localAmount = localAmount.sum(realAmount);
         } else {
-            this.foreignAmount += realAmount;
+            this.foreignAmount = foreignAmount.sum(realAmount.sameAmountIn(localCurrency));
         }
     }
 
-    public int calculateProfit() {
-        return localAmount - calculateTax() + foreignAmount;
+    public Money calculateProfit() {
+        return localAmount.subtract(calculateTax()).sum(foreignAmount);
     }
 
-    public int calculateTax() {
-        if (localAmount < 0) {
-            return 0;
+    public Money calculateTax() {
+        if (localAmount.lessThan(money(0, localCurrency))) {
+            return money(0, localCurrency);
         }
 
-        return (int) (localAmount * 0.2);
+        return localAmount.timesBy(0.2);
     }
 }

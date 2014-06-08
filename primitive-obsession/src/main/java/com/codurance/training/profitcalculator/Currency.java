@@ -15,4 +15,11 @@ public class Currency {
 	public static Currency currency(String symbol) {
 		return new Currency(symbol);
 	}
+
+	@Override
+	public String toString() {
+		return "Currency{" +
+				"symbol='" + symbol + '\'' +
+				'}';
+	}
 }

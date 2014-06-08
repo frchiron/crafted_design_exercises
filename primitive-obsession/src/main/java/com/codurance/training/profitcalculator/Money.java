@@ -26,6 +26,35 @@ public class Money {
 		return money(-amount, currency);
 	}
 
+	public Money sum(Money anotherAmount) {
+		validateCurrencyForOperation(anotherAmount);
+		return money(amount + anotherAmount.amount, currency);
+	}
+
+	public Money subtract(Money anotherAmount) {
+		validateCurrencyForOperation(anotherAmount);
+		return money(amount - anotherAmount.amount, currency);
+	}
+
+	public boolean lessThan(Money anotherAmount) {
+		validateCurrencyForOperation(anotherAmount);
+		return amount < anotherAmount.amount;
+	}
+
+	public Money timesBy(double multiplier) {
+		return money((int) Math.abs(amount * multiplier), currency);
+	}
+
+	public Money sameAmountIn(Currency anotherCurrency) {
+		return money(amount, anotherCurrency);
+	}
+
+	private void validateCurrencyForOperation(Money anotherAmount) {
+		if (!currency.equals(anotherAmount.currency)) {
+			throw new IllegalArgumentException("Sum cannot be performed for different currencies");
+		}
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -46,10 +75,12 @@ public class Money {
 		return result;
 	}
 
-	public Money sum(Money anotherAmount) {
-		if (!currency.equals(anotherAmount.currency)) {
-			throw new IllegalArgumentException("Sum cannot be performed for different currencies");
-		}
-		return new Money(amount + anotherAmount.amount, currency);
+	@Override
+	public String toString() {
+		return "Money{" +
+				"currency=" + currency +
+				", amount=" + amount +
+				'}';
 	}
+
 }
