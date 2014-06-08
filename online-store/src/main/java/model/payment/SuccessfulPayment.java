@@ -1,4 +1,4 @@
-package model.shopping;
+package model.payment;
 
 import static java.util.Collections.EMPTY_LIST;
 

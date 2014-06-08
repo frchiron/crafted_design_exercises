@@ -1,4 +1,4 @@
-package model.shopping;
+package model.payment;
 
 public class PaymentDetails {
 }

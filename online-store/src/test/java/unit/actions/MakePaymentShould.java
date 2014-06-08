@@ -1,9 +1,10 @@
 package unit.actions;
 
 import actions.MakePayment;
+import model.payment.PaymentGateway;
 import model.shopping.Basket;
-import model.shopping.PaymentDetails;
-import model.shopping.PaymentStatus;
+import model.payment.PaymentDetails;
+import model.payment.PaymentStatus;
 import model.stock.Stock;
 import model.stock.StockCheck;
 import org.junit.Before;
@@ -18,6 +19,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.Is.isA;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MakePaymentShould {
@@ -28,10 +30,11 @@ public class MakePaymentShould {
 	private PaymentDetails paymentDetails;
 
 	@Mock private Stock stock;
+	@Mock private PaymentGateway paymentGateway;
 
 	@Before
 	public void initialise() {
-		makePayment = new MakePayment(stock);
+		makePayment = new MakePayment(stock, paymentGateway);
 		basket = new Basket();
 		paymentDetails = new PaymentDetails();
 	}
@@ -50,6 +53,15 @@ public class MakePaymentShould {
 		PaymentStatus paymentStatus = makePayment.execute(basket, paymentDetails);
 
 		assertPaymentFailedWithMessage(paymentStatus, SOCRA_BOOK_NOT_IN_STOCK);
+	}
+
+	@Test public void
+	send_payment_details_to_be_processed() {
+		givenStockCheckIsSuccessful();
+
+		makePayment.execute(basket, paymentDetails);
+
+		verify(paymentGateway).makePaymentWith(paymentDetails);
 	}
 
 	private void givenStockCheckIsSuccessful() {
