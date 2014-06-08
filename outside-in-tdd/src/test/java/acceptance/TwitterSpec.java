@@ -1,6 +1,8 @@
 package acceptance;
 
+import com.codurance.twitter.InMemoryTweetRepository;
 import com.codurance.twitter.Tweet;
+import com.codurance.twitter.TweetValidator;
 import com.codurance.twitter.TwitterEngine;
 import org.junit.Before;
 
@@ -23,19 +25,23 @@ public abstract class TwitterSpec {
 	static final String STEVE_SECOND_TWEET  = "Steve second tweet";
 	static final String PEDRO_FIRST_TWEET   = "Pedro first tweet";
 
+	private TweetValidator tweetValidator;
 	private TwitterEngine twitterEngine;
+	private InMemoryTweetRepository inMemoryTweetRepository;
 
 	@Before
 	public void initialise() {
-	    twitterEngine = new TwitterEngine();
+		tweetValidator = new TweetValidator();
+		inMemoryTweetRepository = new InMemoryTweetRepository();
+		twitterEngine = new TwitterEngine(tweetValidator, inMemoryTweetRepository);
 	}
 
 	void post(String twitterId, String tweet) {
-		throw new UnsupportedOperationException();
+		twitterEngine.post(twitterId, tweet);
 	}
 
 	List<Tweet> tweetsFrom(String twitterId) {
-		throw new UnsupportedOperationException();
+		return twitterEngine.tweetsFrom(twitterId);
 	}
 
 	List<Tweet> wallOf(String twitterId) {
