@@ -27,6 +27,14 @@ public class Items {
 					}), currency);
 	}
 
+	public Items notIn(Currency currency) {
+		Items notInCurrency = new Items();
+		items.stream()
+				.filter(i -> !i.isIn(currency))
+				.forEach(i -> notInCurrency.add(i));
+		return notInCurrency;
+	}
+
 	private Stream<Item> itemsIn(Currency currency) {
 		return items.stream().filter(i -> i.isIn(currency));
 	}
@@ -39,14 +47,6 @@ public class Items {
 		return amounts.reduce(
 				money(0, currency),
 				(m1, m2) -> m1.sum(m2));
-	}
-
-	public Items notIn(Currency currency) {
-		Items notInCurrency = new Items();
-		items.stream()
-					.filter(i -> !i.isIn(currency))
-					.forEach(i -> notInCurrency.add(i));
-		return notInCurrency;
 	}
 
 }
