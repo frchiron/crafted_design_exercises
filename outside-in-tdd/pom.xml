@@ -78,7 +78,7 @@
 						<configuration>
 							<argLine>${surefireArgs}</argLine>
 							<includes>
-								<include>**/*Spec.scala</include>
+								<include>**/*Spec.java</include>
 								<include>**/*Should.*</include>
 								<include>**/*Test.*</include>
 							</includes>
