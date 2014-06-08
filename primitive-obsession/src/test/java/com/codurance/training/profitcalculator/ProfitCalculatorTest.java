@@ -5,7 +5,9 @@ import org.junit.Test;
 import static com.codurance.training.profitcalculator.Currency.EUR;
 import static com.codurance.training.profitcalculator.Currency.GBP;
 import static com.codurance.training.profitcalculator.Currency.USD;
+import static com.codurance.training.profitcalculator.Incoming.incoming;
 import static com.codurance.training.profitcalculator.Money.money;
+import static com.codurance.training.profitcalculator.Outgoing.outgoing;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -17,7 +19,7 @@ public final class ProfitCalculatorTest {
 
     @Test public void
     calculates_the_tax_at_20_percent() {
-        gbpCalculator.add(money(500, GBP), true);
+        gbpCalculator.add(incoming(money(500, GBP)));
 
         Money profit = gbpCalculator.calculateProfit();
         Money tax = gbpCalculator.calculateTax();
@@ -28,8 +30,8 @@ public final class ProfitCalculatorTest {
 
     @Test public void
     calculates_the_tax_of_multiple_amounts() {
-        gbpCalculator.add(money(120, GBP), true);
-        gbpCalculator.add(money(200, GBP), true);
+        gbpCalculator.add(incoming(money(120, GBP)));
+        gbpCalculator.add(incoming(money(200, GBP)));
 
         Money profit = gbpCalculator.calculateProfit();
         Money tax = gbpCalculator.calculateTax();
@@ -40,8 +42,8 @@ public final class ProfitCalculatorTest {
 
     @Test public void
     different_currencies_are_not_taxed() {
-        gbpCalculator.add(money(120, GBP), true);
-        gbpCalculator.add(money(200, USD), true);
+        gbpCalculator.add(incoming(money(120, GBP)));
+        gbpCalculator.add(incoming(money(200, USD)));
 
         Money profit = gbpCalculator.calculateProfit();
         Money tax = gbpCalculator.calculateTax();
@@ -52,9 +54,9 @@ public final class ProfitCalculatorTest {
 
     @Test public void
     handle_outgoings() {
-        gbpCalculator.add(money(500, GBP), true);
-        gbpCalculator.add(money(80, USD), true);
-        gbpCalculator.add(money(360, EUR), false);
+        gbpCalculator.add(incoming(money(500, GBP)));
+        gbpCalculator.add(incoming(money(80, USD)));
+        gbpCalculator.add(outgoing(money(360, EUR)));
 
         Money profit = gbpCalculator.calculateProfit();
         Money tax = gbpCalculator.calculateTax();
@@ -65,10 +67,10 @@ public final class ProfitCalculatorTest {
 
     @Test public void
     a_negative_balance_results_in_no_tax() {
-        gbpCalculator.add(money(500, GBP), true);
-        gbpCalculator.add(money(200, GBP), false);
-        gbpCalculator.add(money(400, GBP), false);
-        gbpCalculator.add(money(20, GBP), false);
+        gbpCalculator.add(incoming(money(500, GBP)));
+        gbpCalculator.add(outgoing(money(200, GBP)));
+        gbpCalculator.add(outgoing(money(400, GBP)));
+        gbpCalculator.add(outgoing(money(20, GBP)));
 
         Money profit = gbpCalculator.calculateProfit();
         Money tax = gbpCalculator.calculateTax();
@@ -79,9 +81,9 @@ public final class ProfitCalculatorTest {
 
     @Test public void
     everything_is_reported_in_the_local_currency() {
-        eurCalculator.add(money(400, GBP), true);
-        eurCalculator.add(money(200, USD), false);
-        eurCalculator.add(money(200, EUR), true);
+        eurCalculator.add(incoming(money(400, GBP)));
+        eurCalculator.add(outgoing(money(200, USD)));
+        eurCalculator.add(incoming(money(200, EUR)));
 
         Money profit = eurCalculator.calculateProfit();
         Money tax = eurCalculator.calculateTax();

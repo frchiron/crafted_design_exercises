@@ -19,7 +19,7 @@ public class Money {
 	}
 
 	public Money dividedBy(double divisor) {
-		return money((int) Math.abs(amount / divisor), currency);
+		return money(toInt(amount / divisor), currency);
 	}
 
 	public Money negative() {
@@ -42,7 +42,7 @@ public class Money {
 	}
 
 	public Money timesBy(double multiplier) {
-		return money((int) Math.abs(amount * multiplier), currency);
+		return money(toInt(amount * multiplier), currency);
 	}
 
 	public Money sameAmountIn(Currency anotherCurrency) {
@@ -53,6 +53,10 @@ public class Money {
 		if (!currency.equals(anotherAmount.currency)) {
 			throw new IllegalArgumentException("Sum cannot be performed for different currencies");
 		}
+	}
+
+	private int toInt(double value) {
+		return (int)(long)value;
 	}
 
 	@Override

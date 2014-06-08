@@ -16,15 +16,11 @@ public final class ProfitCalculator {
 	    this.foreignAmount = money(0, localCurrency);
     }
 
-    public void add(Money amount, boolean incoming) {
-        Money realAmount = amount;
-        Double exchangeRate = exchangeRates.rateFor(amount.currency()) / exchangeRates.rateFor(localCurrency);
-        if (exchangeRate != null) {
-            realAmount = realAmount.dividedBy(exchangeRate);
-        }
-        if (!incoming) {
-            realAmount = realAmount.negative();
-        }
+    public void add(Item item) {
+        Money realAmount = item.amount();
+        Double exchangeRate = exchangeRates.rateFor(realAmount.currency()) / exchangeRates.rateFor(localCurrency);
+
+	    realAmount = realAmount.dividedBy(exchangeRate);
         if (localCurrency.equals(realAmount.currency())) {
             this.localAmount = localAmount.sum(realAmount);
         } else {
