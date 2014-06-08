@@ -35,4 +35,20 @@ public class ItemsTest {
 		assertThat(items.amountIn(USD), is(money(-150, USD)));
 	}
 
+	@Test public void
+	items_not_in_specified_currency() {
+		items.add(outgoing(money(100, GBP)));
+		items.add(incoming(money(130, GBP)));
+		items.add(incoming(money(300, GBP)));
+		items.add(incoming(money(50, EUR)));
+		items.add(outgoing(money(200, USD)));
+		items.add(incoming(money(50, USD)));
+
+		Items itemsNotInGBP = items.notIn(GBP);
+
+		assertThat(itemsNotInGBP.amountIn(GBP), is(money(0, GBP)));
+		assertThat(itemsNotInGBP.amountIn(EUR), is(money(50, EUR)));
+		assertThat(itemsNotInGBP.amountIn(USD), is(money(-150, USD)));
+	}
+
 }

@@ -18,6 +18,15 @@ public class Items {
 		return sum(amountsOf(itemsIn(currency)), currency);
 	}
 
+	public Money amountIn(Currency currency, ExchangeRates exchangeRates) {
+		return sum(amountsOf(items.stream())
+					.map(a -> {
+						Double currencyExchangeRate = exchangeRates.rateFor(currency);
+						double exchangeRate = exchangeRates.rateFor(a.currency()) / currencyExchangeRate;
+						return a.dividedBy(exchangeRate).sameAmountIn(currency);
+					}), currency);
+	}
+
 	private Stream<Item> itemsIn(Currency currency) {
 		return items.stream().filter(i -> i.isIn(currency));
 	}
@@ -31,4 +40,13 @@ public class Items {
 				money(0, currency),
 				(m1, m2) -> m1.sum(m2));
 	}
+
+	public Items notIn(Currency currency) {
+		Items notInCurrency = new Items();
+		items.stream()
+					.filter(i -> !i.isIn(currency))
+					.forEach(i -> notInCurrency.add(i));
+		return notInCurrency;
+	}
+
 }
