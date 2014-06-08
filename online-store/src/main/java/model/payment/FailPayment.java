@@ -18,4 +18,9 @@ public class FailPayment extends PaymentStatus {
 	public boolean fail() {
 		return true;
 	}
+
+	@Override
+	public boolean success() {
+		return false;
+	}
 }

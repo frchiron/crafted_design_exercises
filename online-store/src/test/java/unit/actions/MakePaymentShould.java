@@ -17,6 +17,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.Is.isA;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -30,10 +31,11 @@ public class MakePaymentShould {
 
 	@Mock private Stock stock;
 	@Mock private PaymentGateway paymentGateway;
+	@Mock private PaymentConfirmationEmail paymentConfirmationEmail;
 
 	@Before
 	public void initialise() {
-		makePayment = new MakePayment(stock, paymentGateway);
+		makePayment = new MakePayment(stock, paymentGateway, paymentConfirmationEmail);
 		basket = new Basket();
 		paymentDetails = new PaymentDetails();
 	}
@@ -58,6 +60,7 @@ public class MakePaymentShould {
 	@Test public void
 	send_payment_details_to_be_processed() {
 		givenStockCheckIsSuccessful();
+		givenPaymentIsSuccessful();
 
 		makePayment.execute(basket, paymentDetails);
 
@@ -72,6 +75,26 @@ public class MakePaymentShould {
 		PaymentStatus status = makePayment.execute(basket, paymentDetails);
 
 	    assertPaymentFailedWithMessage(status, CREDIT_CHECK_FAILED);
+	}
+
+	@Test public void
+	not_send_a_confirmation_email_when_payment_is_not_successful() {
+		givenStockCheckIsSuccessful();
+		givenPaymentGatewayReturnsAFailureWithMessage(CREDIT_CHECK_FAILED);
+
+		makePayment.execute(basket, paymentDetails);
+
+		verify(paymentConfirmationEmail, never()).send(basket);
+	}
+
+	@Test public void
+	send_payment_confirmation_email() {
+		givenStockCheckIsSuccessful();
+		givenPaymentIsSuccessful();
+
+		makePayment.execute(basket, paymentDetails);
+
+		verify(paymentConfirmationEmail).send(basket);
 	}
 
 	private void givenPaymentGatewayReturnsAFailureWithMessage(String errorMessage) {

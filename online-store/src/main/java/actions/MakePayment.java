@@ -10,10 +10,12 @@ import static model.stock.StockCheckStatus.OUT_OF_STOCK;
 public class MakePayment {
 	private Stock stock;
 	private PaymentGateway paymentGateway;
+	private PaymentConfirmationEmail paymentConfirmationEmail;
 
-	public MakePayment(Stock stock, PaymentGateway paymentGateway) {
+	public MakePayment(Stock stock, PaymentGateway paymentGateway, PaymentConfirmationEmail paymentConfirmationEmail) {
 		this.stock = stock;
 		this.paymentGateway = paymentGateway;
+		this.paymentConfirmationEmail = paymentConfirmationEmail;
 	}
 
 	public PaymentStatus execute(Basket basket, PaymentDetails paymentDetails) {
@@ -21,7 +23,12 @@ public class MakePayment {
 		if (OUT_OF_STOCK == stockCheck.status()) {
 			return new FailPayment(stockCheck.messages());
 		}
-		return paymentGateway.makePaymentWith(paymentDetails);
-//		return new SuccessfulPayment();
+
+		PaymentStatus status = paymentGateway.makePaymentWith(paymentDetails);
+		if (status.success()) {
+			paymentConfirmationEmail.send(basket);
+		}
+		return status;
 	}
+
 }

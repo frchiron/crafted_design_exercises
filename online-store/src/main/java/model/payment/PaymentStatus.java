@@ -14,6 +14,8 @@ public abstract class PaymentStatus {
 
 	public abstract boolean fail();
 
+	public abstract boolean success();
+
 	public List<String> messages() {
 		return unmodifiableList(messages);
 	}
