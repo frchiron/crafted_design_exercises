@@ -17,7 +17,7 @@ public class TwitterEngine {
 		tweetRepository.post(twitterId, tweet);
 	}
 
-	public List<Tweet> tweetsFrom(String twitterId) {
+	public List<Tweet> tweetsBy(String twitterId) {
 		return tweetRepository.tweetsFrom(twitterId);
 	}
 }

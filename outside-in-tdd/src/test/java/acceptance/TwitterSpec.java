@@ -40,8 +40,8 @@ public abstract class TwitterSpec {
 		twitterEngine.post(twitterId, tweet);
 	}
 
-	List<Tweet> tweetsFrom(String twitterId) {
-		return twitterEngine.tweetsFrom(twitterId);
+	List<Tweet> tweetsBy(String twitterId) {
+		return twitterEngine.tweetsBy(twitterId);
 	}
 
 	List<Tweet> wallOf(String twitterId) {

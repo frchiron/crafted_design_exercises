@@ -7,7 +7,6 @@ import com.codurance.twitter.TwitterEngine;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -56,7 +55,7 @@ public class TwitterEngineShould {
 	return_tweet_sent_by_a_user() {
 		given(tweetRepository.tweetsFrom(SANDRO)).willReturn(SANDRO_TWEETS);
 
-		List<Tweet> tweets = twitterEngine.tweetsFrom(SANDRO);
+		List<Tweet> tweets = twitterEngine.tweetsBy(SANDRO);
 
 	    assertThat(tweets, is(SANDRO_TWEETS));
 	}

@@ -17,7 +17,7 @@ public class TweetsFromSpecificUserSpec extends TwitterSpec {
 		post(SANDRO, SANDRO_SECOND_TWEET);
 		post(MASH,   MASH_FIRST_TWEET);
 
-		List<Tweet> tweets = tweetsFrom(SANDRO);
+		List<Tweet> tweets = tweetsBy(SANDRO);
 
 		assertThat(tweets.size(), is(2));
 		assertThat(tweets.get(0).message(), is(SANDRO_SECOND_TWEET));
