@@ -1,10 +1,8 @@
 package unit.actions;
 
 import actions.MakePayment;
-import model.payment.PaymentGateway;
+import model.payment.*;
 import model.shopping.Basket;
-import model.payment.PaymentDetails;
-import model.payment.PaymentStatus;
 import model.stock.Stock;
 import model.stock.StockCheck;
 import org.junit.Before;
@@ -25,6 +23,7 @@ import static org.mockito.Mockito.verify;
 public class MakePaymentShould {
 
 	public static final String SOCRA_BOOK_NOT_IN_STOCK = "SoCra Book not in stock";
+	private static final String CREDIT_CHECK_FAILED = "User credit check failed";
 	private MakePayment makePayment;
 	private Basket basket;
 	private PaymentDetails paymentDetails;
@@ -42,6 +41,7 @@ public class MakePaymentShould {
 	@Test public void
 	return_payment_status_after_submiting_payment_details() {
 		givenStockCheckIsSuccessful();
+		givenPaymentIsSuccessful();
 
 		assertThat(makePayment.execute(basket, paymentDetails), isA(PaymentStatus.class));
 	}
@@ -62,6 +62,28 @@ public class MakePaymentShould {
 		makePayment.execute(basket, paymentDetails);
 
 		verify(paymentGateway).makePaymentWith(paymentDetails);
+	}
+
+	@Test public void
+	inform_when_payment_could_not_be_made() {
+		givenStockCheckIsSuccessful();
+		givenPaymentGatewayReturnsAFailureWithMessage(CREDIT_CHECK_FAILED);
+
+		PaymentStatus status = makePayment.execute(basket, paymentDetails);
+
+	    assertPaymentFailedWithMessage(status, CREDIT_CHECK_FAILED);
+	}
+
+	private void givenPaymentGatewayReturnsAFailureWithMessage(String errorMessage) {
+		paymentGatewayWillReturn(new FailPayment(errorMessage));
+	}
+
+	private void givenPaymentIsSuccessful() {
+		paymentGatewayWillReturn(new SuccessfulPayment());
+	}
+
+	private void paymentGatewayWillReturn(PaymentStatus value) {
+		given(paymentGateway.makePaymentWith(paymentDetails)).willReturn(value);
 	}
 
 	private void givenStockCheckIsSuccessful() {
