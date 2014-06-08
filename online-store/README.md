@@ -26,4 +26,4 @@ Then she receives the payment confirmation
 3. Don't worry about the delivery mechanism. The entry point of this exercise is an action.
 4. Mock external systems
 5. Model packages and classes according to IDD building blocks.
-6. Write a high level acceptance criteria test. Don't focus on the details.
+6. Don't worry about acceptance tests for this exercise.
