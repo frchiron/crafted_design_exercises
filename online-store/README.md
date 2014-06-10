@@ -27,5 +27,6 @@ Then she receives the payment confirmation
 2. Don't worry about the User attributes.
 3. Don't worry about the delivery mechanism. The entry point of this exercise is an action.
 4. Mock external systems
-5. Model packages and classes according to IDD building blocks.
-6. Don't worry about acceptance tests for this exercise.
+5. Mock email sender
+6. Model packages and classes according to IDD building blocks.
+7. Don't worry about acceptance tests for this exercise.
