@@ -1,7 +1,5 @@
 package com.codurance.twitter;
 
-import java.util.Comparator;
-
 import static java.lang.Integer.valueOf;
 
 public class Tweet implements Comparable<Tweet> {
