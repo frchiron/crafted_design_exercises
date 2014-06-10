@@ -2,8 +2,6 @@ package model.stock;
 
 import model.shopping.Items;
 
-public class Stock {
-	public StockCheck contains(Items items) {
-		throw new UnsupportedOperationException();
-	}
+public interface Stock {
+	StockCheck contains(Items items);
 }
