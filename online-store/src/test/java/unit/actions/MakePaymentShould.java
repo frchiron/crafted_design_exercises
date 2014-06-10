@@ -41,7 +41,7 @@ public class MakePaymentShould {
 	}
 
 	@Test public void
-	return_payment_status_after_submiting_payment_details() {
+	return_payment_status_after_submitting_payment_details() {
 		givenStockCheckIsSuccessful();
 		givenPaymentIsSuccessful();
 
