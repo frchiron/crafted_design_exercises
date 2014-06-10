@@ -4,13 +4,13 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 
-public class FailPayment extends PaymentStatus {
+public class PaymentFailed extends PaymentStatus {
 
-	public FailPayment(List<String> messages) {
+	public PaymentFailed(List<String> messages) {
 		super(messages);
 	}
 
-	public FailPayment(String... messages) {
+	public PaymentFailed(String... messages) {
 		super(asList(messages));
 	}
 

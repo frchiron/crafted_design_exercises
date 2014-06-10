@@ -21,7 +21,7 @@ public class MakePayment {
 	public PaymentStatus execute(Basket basket, PaymentDetails paymentDetails) {
 		StockCheck stockCheck = stock.contains(basket.items());
 		if (OUT_OF_STOCK == stockCheck.status()) {
-			return new FailPayment(stockCheck.messages());
+			return new PaymentFailed(stockCheck.messages());
 		}
 
 		PaymentStatus status = paymentGateway.makePaymentWith(paymentDetails);

@@ -14,7 +14,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static model.stock.StockCheckStatus.IN_STOCK;
 import static model.stock.StockCheckStatus.OUT_OF_STOCK;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.Is.isA;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
@@ -38,14 +37,6 @@ public class MakePaymentShould {
 		makePayment = new MakePayment(stock, paymentGateway, paymentConfirmationEmail);
 		basket = new Basket();
 		paymentDetails = new PaymentDetails();
-	}
-
-	@Test public void
-	return_payment_status_after_submitting_payment_details() {
-		givenStockCheckIsSuccessful();
-		givenPaymentIsSuccessful();
-
-		assertThat(makePayment.execute(basket, paymentDetails), isA(PaymentStatus.class));
 	}
 
 	@Test public void
@@ -98,11 +89,11 @@ public class MakePaymentShould {
 	}
 
 	private void givenPaymentGatewayReturnsAFailureWithMessage(String errorMessage) {
-		paymentGatewayWillReturn(new FailPayment(errorMessage));
+		paymentGatewayWillReturn(new PaymentFailed(errorMessage));
 	}
 
 	private void givenPaymentIsSuccessful() {
-		paymentGatewayWillReturn(new SuccessfulPayment());
+		paymentGatewayWillReturn(new PaymentSuccessful());
 	}
 
 	private void paymentGatewayWillReturn(PaymentStatus value) {

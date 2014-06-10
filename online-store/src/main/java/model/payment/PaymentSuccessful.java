@@ -2,9 +2,9 @@ package model.payment;
 
 import static java.util.Collections.EMPTY_LIST;
 
-public class SuccessfulPayment extends PaymentStatus {
+public class PaymentSuccessful extends PaymentStatus {
 
-	public SuccessfulPayment() {
+	public PaymentSuccessful() {
 		super(EMPTY_LIST);
 	}
 
