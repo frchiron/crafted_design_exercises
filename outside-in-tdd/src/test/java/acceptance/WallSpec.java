@@ -8,7 +8,7 @@ import java.util.List;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class WallSpec extends TwitterSpec {
+public class WallSpec extends BaseTwitterSpec {
 
 	@Test
 	public void

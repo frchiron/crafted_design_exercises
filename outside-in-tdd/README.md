@@ -8,7 +8,7 @@ Create a Twitter engine class that provides the following:
 * Accept tweets from users
 * Return tweets from a specific user in reverse-chronological order
 * Users can follow other users
-* Return all tweets from users being followed, issuing a "wall"
+* Return all tweets from users being followed, invoking a "wall" method.
 	* User's own tweets are also returned as part of her wall. 
 
 ### Implementation details
