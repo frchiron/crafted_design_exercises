@@ -8,7 +8,7 @@ import java.util.List;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class TweetsBySpecificUserSpec extends TwitterSpec {
+public class TweetsByUserSpec extends BaseTwitterSpec {
 
 	@Test public void
 	should_return_all_tweets_from_a_user_in_reverse_chronological_order() {

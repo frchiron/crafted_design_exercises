@@ -8,7 +8,7 @@ import org.junit.Before;
 
 import java.util.List;
 
-public abstract class TwitterSpec {
+public abstract class BaseTwitterSpec {
 
 	static final String SANDRO = "sandromancuso";
 	static final String SAMIR = "samirtalwar";
